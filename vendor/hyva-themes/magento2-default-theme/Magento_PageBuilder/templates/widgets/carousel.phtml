@@ -1,0 +1,99 @@
+<?php
+/**
+ * Hyvä Themes - https://hyva.io
+ * Copyright © Hyvä Themes. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+declare(strict_types=1);
+
+use Hyva\Theme\ViewModel\HyvaCsp;
+use Magento\Framework\Escaper;
+use Magento\Framework\View\Element\Template;
+
+/** @var Template $block */
+/** @var Escaper $escaper */
+/** @var HyvaCsp $hyvaCsp */
+?>
+<script>
+    (() => {
+        const initSliderCarousel = (el) => {
+            const sliderId = el.getAttribute('data-pb-style');
+
+            const skipLink = document.createElement('a');
+            skipLink.setAttribute('href', `#${sliderId}-slider-end`);
+            skipLink.classList.add('sr-only', 'focus:not-sr-only', 'focus:absolute', 'focus:p-2', 'focus:bg-white');
+            skipLink.innerText = '<?= $escaper->escapeJs(__('Press to skip carousel')) ?>';
+
+            const skipLinkTarget = document.createElement('span');
+            skipLinkTarget.setAttribute('id', `${sliderId}-slider-end`);
+            skipLinkTarget.setAttribute('tabindex', '-1');
+
+            const track = document.createElement('div');
+            track.setAttribute('data-track', '');
+            track.classList.add('snap-track');
+            Array.from(el.children).forEach(slide => track.appendChild(slide));
+
+            el.appendChild(track);
+            el.insertBefore(skipLink, track);
+            el.appendChild(skipLinkTarget);
+            el.classList.add('snap-slider');
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            if (typeof SnapSlider === 'undefined') return;
+
+            const carousels = document.querySelectorAll(`
+                [data-content-type="products"][data-appearance="carousel"],
+                [data-content-type="slider"]
+            `);
+
+            carousels.forEach(el => {
+                const sliderOptions = el.dataset;
+                const autoPager = sliderOptions.showDots === "true";
+                const showArrows = sliderOptions.showArrows === "true";
+
+                if (el.dataset.contentType === 'slider') {
+                    initSliderCarousel(el);
+
+                    if (showArrows) {
+                        el.insertAdjacentHTML(
+                            'beforeend',
+                            '<?= $escaper->escapeJs($block->getBlockHtml('pagebuilder.carousel.nav')) ?>'
+                        );
+                    }
+
+                    if (autoPager) {
+                        const pager = el.querySelector('[data-init-pager]');
+                        if (pager) {
+                            pager.setAttribute('data-pager', '');
+                            pager.removeAttribute('data-init-pager');
+                        }
+                    }
+
+                    new SnapSlider(el, { autoPager, groupPager: true });
+                }
+
+                if (el.dataset.contentType === 'products') {
+                    const slider = el.querySelector('[data-slider-type]');
+                    const sliderNav = el.querySelector('[data-page-builder-slider-nav]');
+
+                    if (sliderNav && autoPager) {
+                        const pager = sliderNav.querySelector('[data-init-pager]');
+                        if (pager) {
+                            pager.setAttribute('data-pager', '');
+                            pager.removeAttribute('data-init-pager');
+                        }
+                    }
+
+                    if (sliderNav && !showArrows) {
+                        sliderNav.querySelectorAll('[data-prev],[data-next]').forEach((btn) => btn.remove());
+                    }
+
+                    new SnapSlider(slider, { autoPager, groupPager: true });
+                }
+            });
+        });
+    })();
+</script>
+<?php $hyvaCsp->registerInlineScript() ?>

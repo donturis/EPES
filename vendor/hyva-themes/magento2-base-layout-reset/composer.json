@@ -1,0 +1,30 @@
+{
+  "name": "hyva-themes/magento2-base-layout-reset",
+  "description": "Hyva Themes Magento base layout reset generation",
+  "type": "magento2-module",
+  "require": {
+    "php": ">=7.4.0",
+    "ext-dom": "*",
+    "ext-libxml": "*",
+    "ext-simplexml": "*",
+    "psr/log": "^1 || ^2 || ^3",
+    "hyva-themes/magento2-theme-module": ">1.3.17",
+    "magento/framework": "*",
+    "magento/module-theme": ">=1.0.2"
+  },
+  "authors": [{
+    "name": "Hyvä Themes B.V.",
+    "email": "info@hyva.io"
+  }],
+  "license": [
+    "OSL-3.0"
+  ],
+  "autoload": {
+    "files": [
+      "src/registration.php"
+    ],
+    "psr-4": {
+      "Hyva\\BaseLayoutReset\\": ["src/"]
+    }
+  }
+}

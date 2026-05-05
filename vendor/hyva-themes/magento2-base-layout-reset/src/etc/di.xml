@@ -1,0 +1,121 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Hyvä Themes - https://hyva.io
+ * Copyright © Hyvä Themes. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Framework\Console\CommandListInterface">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="HyvaBaseLayoutResetsGenerate" xsi:type="object">Hyva\BaseLayoutReset\Console\Command\HyvaBaseLayoutResetGenerate</item>
+                <item name="HyvaBaseLayoutResetInfo" xsi:type="object">Hyva\BaseLayoutReset\Console\Command\HyvaBaseLayoutResetInfo</item>
+                <item name="HyvaBaseLayoutResetMigrateTheme" xsi:type="object">Hyva\BaseLayoutReset\Console\Command\HyvaBaseLayoutResetMigrateTheme</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="\Hyva\BaseLayoutReset\Model\Layout\SpecialCaseLayoutFileReset\SpecialCaseLayoutResetPool">
+        <arguments>
+            <argument name="specialCases" xsi:type="array">
+                <!-- Set any of these to xsi:type="null" to deactivate -->
+                <item name="CatalogDefaultBaseLayoutReset" xsi:type="object">Hyva\BaseLayoutReset\Model\Layout\SpecialCaseLayoutFileReset\CatalogDefaultBaseLayoutReset</item>
+                <item name="CatalogProductViewBaseLayoutReset" xsi:type="object">Hyva\BaseLayoutReset\Model\Layout\SpecialCaseLayoutFileReset\CatalogProductViewBaseLayoutReset</item>
+                <item name="DownloadableCustomerProductsBaseLayoutReset" xsi:type="object">Hyva\BaseLayoutReset\Model\Layout\SpecialCaseLayoutFileReset\DownloadableCustomerProductsBaseLayoutReset</item>
+                <item name="InventoryInStorePickupCheckoutSuccessBaseLayoutReset" xsi:type="object">Hyva\BaseLayoutReset\Model\Layout\SpecialCaseLayoutFileReset\InventoryInStorePickupCheckoutSuccessBaseLayoutReset</item>
+                <item name="LiveSearchProductListingBaseLayoutReset" xsi:type="object">Hyva\BaseLayoutReset\Model\Layout\SpecialCaseLayoutFileReset\LiveSearchProductListingBaseLayoutReset</item>
+                <item name="NegotiableQuotePrintBaseLayoutReset" xsi:type="object">Hyva\BaseLayoutReset\Model\Layout\SpecialCaseLayoutFileReset\NegotiableQuotePrintBaseLayoutReset</item>
+                <item name="NegotiableQuoteTemplateViewBaseLayoutReset" xsi:type="object">Hyva\BaseLayoutReset\Model\Layout\SpecialCaseLayoutFileReset\NegotiableQuotePrintBaseLayoutReset</item>
+                <item name="SwaggerIndexBaseLayoutReset" xsi:type="object">Hyva\BaseLayoutReset\Model\Layout\SpecialCaseLayoutFileReset\SwaggerIndexBaseLayoutReset</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Hyva\BaseLayoutReset\Model\Layout\LayoutFileReset">
+        <arguments>
+            <argument name="excludeFromResets" xsi:type="array">
+                <!-- Layout files included in this * section are not reset, regardless of which module they are in. -->
+                <item name="*" xsi:type="array">
+                    <!-- Email layout files are excluded, too, regardless in which module they are. -->
+                    <item name="sales_email_order_creditmemo_renderers.xml" xsi:type="boolean">true</item>
+                    <item name="sales_email_order_invoice_renderers.xml" xsi:type="boolean">true</item>
+                    <item name="sales_email_order_renderers.xml" xsi:type="boolean">true</item>
+                    <item name="sales_email_order_shipment_renderers.xml" xsi:type="boolean">true</item>
+                    <item name="sales_email_order_creditmemo_items.xml" xsi:type="boolean">true</item>
+                    <item name="sales_email_order_invoice_items.xml" xsi:type="boolean">true</item>
+                    <item name="sales_email_order_shipment_items.xml" xsi:type="boolean">true</item>
+                    <item name="sales_email_order_items.xml" xsi:type="boolean">true</item>
+                    <item name="sales_email_item_price.xml" xsi:type="boolean">true</item>
+                    <item name="sales_email_order_shipment_track.xml" xsi:type="boolean">true</item>
+                    <item name="wishlist_email_items.xml" xsi:type="boolean">true</item>
+                    <item name="wishlist_email_rss.xml" xsi:type="boolean">true</item>
+                    <item name="magento_giftregistry_email_entity_items.xml" xsi:type="boolean">true</item>
+                    <item name="email_purchaseorder_details.xml" xsi:type="boolean">true</item>
+                    <item name="magento_rma_email_rma_items.xml" xsi:type="boolean">true</item>
+
+                    <!-- Do not reset price renderer configuration. -->
+                    <item name="catalog_product_prices.xml" xsi:type="boolean">true</item>
+                </item>
+
+                <!-- Module specific base layout files not to reset. -->
+                <item name="Magento_Catalog" xsi:type="array">
+                    <item name="empty.xml" xsi:type="boolean">true</item>
+                </item>
+                <item name="Magento_Checkout" xsi:type="array">
+                    <item name="checkout.xml" xsi:type="boolean">true</item>
+                </item>
+                <item name="Magento_LayeredNavigation" xsi:type="array">
+                    <item name="truecolumn.xml" xsi:type="boolean">true</item>
+                    <item name="2columns-left.xml" xsi:type="boolean">true</item>
+                    <item name="2columns-right.xml" xsi:type="boolean">true</item>
+                    <item name="3columns.xml" xsi:type="boolean">true</item>
+                    <item name="empty.xml" xsi:type="boolean">true</item>
+                </item>
+                <item name="Magento_NewRelicReporting" xsi:type="array">
+                    <item name="default.xml" xsi:type="boolean">true</item>
+                </item>
+                <item name="Magento_PageBuilder" xsi:type="array">
+                    <item name="catalog_category_view.xml" xsi:type="boolean">true</item>
+                    <item name="category-full-width.xml" xsi:type="boolean">true</item>
+                    <item name="cms-full-width.xml" xsi:type="boolean">true</item>
+                </item>
+                <item name="Magento_Robots" xsi:type="array">
+                    <item name="robots.xml" xsi:type="boolean">true</item>
+                </item>
+                <item name="PayPal_Braintree" xsi:type="array">
+                    <item name="catalog_product_view_type_bundle.xml" xsi:type="boolean">true</item>
+                    <item name="catalog_product_view_type_configurable.xml" xsi:type="boolean">true</item>
+                    <item name="catalog_product_view_type_giftcard.xml" xsi:type="boolean">true</item>
+                </item>
+
+            </argument>
+            <!-- Generate base layout resets for these modules if they are present. -->
+            <argument name="modulesToReset" xsi:type="array">
+                <!-- Only Vendor name: reset all modules of this vendor. -->
+                <item name="Magento" xsi:type="boolean">true</item>
+                <!-- Vendor and Module name: reset only this module of the vendor. -->
+                <item name="Amazon_Core" xsi:type="boolean">true</item>
+                <item name="Amazon_Login" xsi:type="boolean">true</item>
+                <item name="Amazon_Payment" xsi:type="boolean">true</item>
+                <item name="Dotdigitalgroup_Chat" xsi:type="boolean">true</item>
+                <item name="Dotdigitalgroup_Email" xsi:type="boolean">true</item>
+                <item name="Dotdigitalgroup_Sms" xsi:type="boolean">true</item>
+                <item name="Klarna_Kp" xsi:type="boolean">true</item>
+                <item name="Klarna_Onsitemessaging" xsi:type="boolean">true</item>
+                <item name="PayPal_Braintree" xsi:type="boolean">true</item>
+                <item name="Vertex_AddressValidation" xsi:type="boolean">true</item>
+                <item name="Vertex_Tax" xsi:type="boolean">true</item>
+                <item name="Yotpo_Yotpo" xsi:type="boolean">true</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Hyva\BaseLayoutReset\Console\Command\HyvaBaseLayoutResetGenerate">
+        <arguments>
+            <!-- These virtual types are declared in app/etc/di.xml. -->
+            <argument name="baseLayoutFilesCollector" xsi:type="object">layoutFileSourceBase</argument>
+            <argument name="basePageLayoutFilesCollector" xsi:type="object">pageLayoutFileSourceBase</argument>
+        </arguments>
+    </type>
+</config>

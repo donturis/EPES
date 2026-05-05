@@ -1,0 +1,165 @@
+<?php
+/**
+ * Hyvä Themes - https://hyva.io
+ * Copyright © Hyvä Themes. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+declare(strict_types=1);
+
+use Hyva\Theme\Model\ViewModelRegistry;
+use Hyva\Theme\ViewModel\LucideIcons;
+use Hyva\Theme\ViewModel\HyvaCsp;
+use Magento\Framework\Escaper;
+use Magento\Framework\View\Element\Template;
+
+/** @var Escaper $escaper */
+/** @var Template $block */
+/** @var ViewModelRegistry $viewModels */
+/** @var HyvaCsp $hyvaCsp */
+
+/** @var LucideIcons $lucideIcons */
+$lucideIcons = $viewModels->require(LucideIcons::class);
+?>
+
+<section id="hyva-demo-hero" class="prose mb-24 lg:mt-6" aria-labelledby="page-title">
+    <div class="hyva-hero-content pt-6 pb-12 sm:p-16 xl:py-32">
+        <hgroup id="page-title" class="my-0 text-primary-darker text-xl md:text-2xl">
+            <h1 class="mt-0 xl:text-6xl">Hyvä Theme</h1>
+            <p class="my-0 uppercase">Where good stores begin.</p>
+        </hgroup>
+        <p class="mt-8 mb-0 inline-flex flex-wrap gap-4">
+            <a class="btn btn-secondary" href="https://hyva.io/">
+                Visit hyva.io
+                <?= $lucideIcons->chevronsRightHtml('', 20, 20, ['aria-hidden' => 'true']) ?>
+            </a>
+            <button
+                class="btn bg-transparent text-primary-darker p-2"
+                x-data="demoThemeToggle"
+                @click="setNewColor"
+                @contextmenu.prevent="setPrideColor"
+            >
+                <?= $lucideIcons->paletteHtml('', 24, 24, ['title' => 'Preview with a diffrent Colour']); ?>
+            </button>
+        </p>
+    </div>
+    <div class="card p-8 xl:p-12 shadow-md flow-root">
+        <img
+            src="<?= $escaper->escapeHtmlAttr($block->getViewFileUrl('images/hyva-logo.svg')) ?>"
+            alt=""
+            width="60"
+            height="60"
+            loading="eager"
+            class="float-end ms-8 mb-8 md:w-24 md:h-24 lg:w-36 lg:h-36"
+        >
+        <h2 class="mt-0 mb-4 text-primary-darker">This is the default Hyvä Theme.</h2>
+        <p>
+            We've rebuilt the standard Magento 2 frontend for speed, simplicity, and joy.
+            Now <strong>open source and free</strong>,
+            Hyvä Theme combines the best of Magento frontend development with modern tools developers love,
+            like AlpineJS and Tailwind CSS.
+        </p>
+        <p>
+            It's highly-performant out of the box, reduces build times,
+            and powers the next generation of Magento and Adobe Commerce stores built with <strong>Hyvä Commerce</strong>.
+        </p>
+        <p class="mt-8 mb-0">
+            <a href="https://hyva.io/hyva-theme-license.html" class="btn btn-primary">Start building better with Hyvä.</a>
+        </p>
+    </div>
+</section>
+
+<style>
+    #hyva-demo-hero {
+        --_clr: color-mix(in oklch, var(--color-primary-lighter) 20%, #0000);
+        --_clr-alt: color-mix(in oklch, var(--color-secondary-lighter) 20%, #0000);
+        --_bg: radial-gradient(circle at 60%, var(--_clr-alt), var(--_clr));
+        --_gap: calc(var(--spacing) * 8);
+        --_radius: calc(var(--spacing) * 4);
+    }
+
+    .hyva-hero-content {
+        border-image: var(--_bg) fill 0 / 1 / var(--_gap) 20vw;
+    }
+
+    @media (width >= 40rem) {
+        #hyva-demo-hero {
+            display: grid;
+            grid-template-columns: minmax(auto, 1fr) var(--_gap) minmax(auto, 1.5fr);
+            grid-template-rows: calc(var(--_gap) * 5) auto var(--_gap) auto;
+
+            &::before {
+                z-index: -1;
+                content: "";
+                background-image: var(--_bg);
+                border-radius: var(--_radius);
+                grid-column: 1 / -1;
+                grid-row: 1 / 4;
+            }
+
+            & .card {
+                grid-column: 1 / -1;
+                grid-row: 3 / 5;
+                margin-inline: calc(var(--_radius) * 2);
+                border-radius: var(--_radius);
+            }
+        }
+
+        .hyva-hero-content {
+            border-image: none;
+            grid-column: 1 / -1;
+            grid-row: 1 / 3;
+        }
+    }
+
+    @media (width >= 80rem) {
+        #hyva-demo-hero {
+            --_radius: calc(var(--spacing) * 6);
+
+            &::before {
+                grid-row: 1 / 3;
+            }
+
+            & .card {
+                grid-column: 2 / -1;
+                grid-row: 2 / 5;
+            }
+        }
+
+        .hyva-hero-content {
+            grid-column: 1 / 3;
+        }
+    }
+</style>
+
+<script>
+    window.addEventListener('alpine:init', () => Alpine.data('demoThemeToggle', () => ({
+        degrees: [265, 150, 25, 310, 290],
+        degreesAlt: [150, 210, 290, 0, 50],
+        index: 0,
+        easterEgg: false,
+        setNewColor() {
+            this.index = (this.degrees.length - 1) === this.index ? 0 : this.index + 1;
+            const hue = this.degrees[this.index];
+            const hueAlt = this.degreesAlt[this.index];
+            const root = document.documentElement;
+
+            root.style.setProperty('--color-primary-lighter', `oklch(52% .2 ${hue})`);
+            root.style.setProperty('--color-primary', `oklch(46% .2 ${hue})`);
+            root.style.setProperty('--color-primary-darker', `oklch(28% .2 ${hue})`);
+
+            root.style.setProperty('--color-secondary-lighter', `oklch(72% .2 ${hueAlt})`);
+            root.style.setProperty('--color-secondary', `oklch(53% .15 ${hueAlt})`);
+            root.style.setProperty('--color-secondary-darker', `oklch(39% .1 ${hueAlt})`);
+        },
+        setPrideColor() {
+            this.easterEgg = !this.easterEgg;
+            const root = document.getElementById('hyva-demo-hero');
+            const value = this.easterEgg
+                ? 'linear-gradient(45deg in oklch longer hue, #fecaca, #f5d0fe)'
+                : 'radial-gradient(circle at 60%, var(--_clr-alt), var(--_clr))';
+            root.style.setProperty('--_bg', value);
+        }
+    })), { once: true })
+</script>
+<?php $hyvaCsp->registerInlineScript() ?>

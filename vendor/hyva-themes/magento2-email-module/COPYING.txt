@@ -1,0 +1,8 @@
+This product includes software developed by Magento, Inc. (https://github.com/magento/magento2)
+and distributed under the Open Source License (OSL) v3.0.
+
+Other source files Copyright © 2020-present Hyvä Themes (https://www.hyva.io).
+
+Each source file included in this project is licensed under OSL 3.0. 
+
+Please see http://opensource.org/licenses/osl-3.0.php or LICENSE.txt for the full text of the OSL 3.0 license.

@@ -1,0 +1,29 @@
+<?php
+/**
+ * Hyvä Themes - https://hyva.io
+ * Copyright © Hyvä Themes. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+declare(strict_types=1);
+
+use Hyva\Theme\Model\ViewModelRegistry;
+use Hyva\Theme\ViewModel\ReCaptcha;
+use Magento\Framework\Escaper;
+use Magento\Framework\View\Element\Template;
+
+/** @var Template $block */
+/** @var ViewModelRegistry $viewModels */
+/** @var Escaper $escaper */
+
+// reCaptcha v3 form element
+
+$formId = $block->getData('form_id') ?? '';
+$recaptcha = $viewModels->require(ReCaptcha::class);
+
+?>
+<div class="control">
+    <input type="hidden"
+           value=""
+           name="<?= $escaper->escapeHtmlAttr($recaptcha->getResultTokenFieldName($formId)) ?>"
+    >
+</div>

@@ -1,0 +1,70 @@
+<?php
+declare(strict_types=1);
+
+use Hyva\Theme\Model\ViewModelRegistry;
+use Hyva\Theme\ViewModel\HeroiconsOutline;
+use Hyva\Theme\ViewModel\StoreConfig;
+use Magento\Framework\Escaper;
+
+/** @var ViewModelRegistry $viewModels */
+/** @var Escaper $escaper */
+
+$storeConfig = $viewModels->require(StoreConfig::class);
+$heroicons = $viewModels->require(HeroiconsOutline::class);
+$storePhoneNumber = $storeConfig->getStoreConfig('general/store_information/phone') ?? '';
+$storeEmail = $storeConfig->getStoreConfig('trans_email/ident_general/email') ?? '';
+$storeName = $storeConfig->getStoreConfig('general/store_information/name') ?? '';
+$storeStreet = $storeConfig->getStoreConfig('general/store_information/street_line1') ?? '';
+$storeCity = $storeConfig->getStoreConfig('general/store_information/city') ?? '';
+$storeZip = $storeConfig->getStoreConfig('general/store_information/postcode') ?? '';
+?>
+
+<div class="ep-card" style="padding:32px; height:100%;">
+    <div class="ep-card-icon" style="margin-bottom:16px;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+    </div>
+    <h3 style="font-size:1.25rem; font-weight:700; color:#1a365d; margin-bottom:20px;">
+        <?= $escaper->escapeHtml(__('Contact Details')) ?>
+    </h3>
+
+    <div style="margin-bottom:24px;">
+        <p style="font-weight:700; font-size:1rem; color:#1a365d; margin-bottom:4px;"><?= $escaper->escapeHtml($storeName) ?></p>
+        <address style="font-style:normal; color:#4a5568; line-height:1.8;">
+            <?= $escaper->escapeHtml($storeStreet) ?><br>
+            <?= $escaper->escapeHtml($storeCity) ?><br>
+            <?= $escaper->escapeHtml($storeZip) ?>
+        </address>
+    </div>
+
+    <?php if ($storePhoneNumber): ?>
+    <div class="ep-contact-card" style="margin-bottom:12px;">
+        <div class="ep-contact-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+        <div>
+            <strong style="color:#1a365d;">Teléfono</strong>
+            <p style="margin:0;"><a href="tel:<?= $escaper->escapeHtmlAttr(preg_replace("/[^0-9+]/", "", $storePhoneNumber)) ?>" style="color:#1f48c5;"><?= $escaper->escapeHtml($storePhoneNumber) ?></a></p>
+        </div>
+    </div>
+    <?php endif; ?>
+
+    <div class="ep-contact-card" style="margin-bottom:12px;">
+        <div class="ep-contact-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <div>
+            <strong style="color:#1a365d;">Email</strong>
+            <p style="margin:0;"><a href="mailto:<?= $escaper->escapeHtmlAttr($storeEmail) ?>" style="color:#1f48c5;"><?= $escaper->escapeHtml($storeEmail) ?></a></p>
+        </div>
+    </div>
+
+    <div class="ep-contact-card">
+        <div class="ep-contact-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <div>
+            <strong style="color:#1a365d;">WhatsApp</strong>
+            <p style="margin:0;"><a href="https://wa.me/523511279121" style="color:#1f48c5;">351-127-9121</a></p>
+        </div>
+    </div>
+</div>

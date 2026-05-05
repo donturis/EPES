@@ -1,0 +1,26 @@
+<?php
+/**
+ * Hyvä Themes - https://hyva.io
+ * Copyright © Hyvä Themes. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+use Magento\Framework\Escaper;
+use Magento\Wishlist\Block\Customer\Wishlist\Item\Column\Image;
+use Magento\Wishlist\Model\Item;
+
+/** @var Image $block */
+/** @var Escaper $escaper */
+
+/** @var Item $item */
+$item = $block->getItem();
+$product = $item->getProduct();
+?>
+<a
+    class="product-item-photo block mb-3"
+    tabindex="-1"
+    href="<?= $escaper->escapeUrl($block->getProductUrl($item)) ?>"
+    title="<?= $escaper->escapeHtmlAttr($product->getName()) ?>"
+>
+    <?= $block->getImage($block->getProductForThumbnail($item), 'wishlist_thumbnail')->toHtml() ?>
+</a>

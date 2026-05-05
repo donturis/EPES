@@ -1,0 +1,64 @@
+<?php
+/**
+ * Hyvä Themes - https://hyva.io
+ * Copyright © Hyvä Themes. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+declare(strict_types=1);
+
+use Magento\Framework\Escaper;
+use Magento\Framework\View\Element\Template;
+
+/** @var Escaper $escaper */
+/** @var Template $block */
+
+?>
+<div class="gift-message">
+    <div class="gift-options-content">
+        <fieldset class="space-y-4">
+            <div class="field" x-id="['recipient']">
+                <label :for="$id('recipient')"><?= $escaper->escapeHtml(__('To:')) ?></label>
+                <div class="control">
+                    <input
+                        :id="$id('recipient')"
+                        type="text"
+                        x-model="formMessage.recipient"
+                        @keydown.enter.prevent="submitGiftOption()"
+                        class="form-input w-full"
+                    >
+                </div>
+            </div>
+
+            <div class="field" x-id="['sender']">
+                <label :for="$id('sender')">
+                    <span><?= $escaper->escapeHtml(__('From:')) ?></span>
+                </label>
+                <div class="control">
+                    <input
+                        :id="$id('sender')"
+                        type="text"
+                        x-model="formMessage.sender"
+                        @keydown.enter.prevent="submitGiftOption()"
+                        class="form-input w-full"
+                    >
+                </div>
+            </div>
+
+            <div class="field required" x-id="['message']">
+                <label :for="$id('message')" class="label">
+                    <span><?= $escaper->escapeHtml(__('Message')) ?></span>
+                </label>
+                <div class="control">
+                    <textarea
+                        :id="$id('message')"
+                        x-model="formMessage.message"
+                        class="form-input w-full"
+                        rows="5"
+                        cols="10"
+                    ></textarea>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</div>

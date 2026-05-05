@@ -1,0 +1,34 @@
+<?php
+/*
+ * Copyright Magmodules.eu. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+use Magento\Framework\Escaper;
+
+/**
+ * @var \Mollie\Payment\Block\Applepay\Shortcut\Button $block
+ * @var Escaper $escaper
+ */
+
+// Magento 2.3 compatibility
+isset($escaper) || $escaper = $block; // @phpstan-ignore-line
+?>
+<div id="mollie_applepay_minicart"
+     data-mage-init='{
+         "Mollie_Payment/js/view/applepay/minicart": {
+            "cartId": "<?= $escaper->escapeJs($block->getCartId()); ?>",
+             "storeName": "<?= $escaper->escapeJs($block->getStoreName()); ?>",
+             "grandTotalAmount": "<?= $escaper->escapeJs($block->getBaseGrandTotal()); ?>",
+             "storeCountry": "<?= $escaper->escapeJs($block->getStoreCountry()); ?>",
+             "storeCurrency": "<?= $escaper->escapeJs($block->getStoreCurrency()); ?>",
+             "supportedNetworks": <?= /* @noEscape */ json_encode($block->getSupportedNetworks()); ?>
+         }
+     }'
+     class="mollie-applepay-minicart mollie-applepay-button-hidden">
+
+    <div class="<?= $escaper->escapeHtmlAttr($block->getButtonClasses()); ?>">
+        <span class="text">Buy with</span>
+        <span class="logo"></span>
+    </div>
+</div>

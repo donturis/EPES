@@ -1,0 +1,30 @@
+<?php
+/**
+ * Hyvä Themes - https://hyva.io
+ * Copyright © Hyvä Themes. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+use Hyva\Theme\Model\ViewModelRegistry;
+use Hyva\Theme\ViewModel\LucideIcons;
+use Magento\Framework\Escaper;
+use Magento\Wishlist\Block\Cart\Item\Renderer\Actions\MoveToWishlist;
+
+/** @var MoveToWishlist $block */
+/** @var Escaper $escaper */
+/** @var ViewModelRegistry $viewModels */
+
+/** @var LucideIcons $lucideIcons */
+$lucideIcons = $viewModels->require(LucideIcons::class);
+?>
+<?php if ($block->isAllowInCart() && $block->isProductVisibleInSiteVisibility()): ?>
+    <button
+        type="button"
+        class="btn p-2"
+        @click='moveToWishlist'
+        data-post-form="<?= $escaper->escapeHtmlAttr($block->getMoveFromCartParams()) ?>"
+        aria-label="<?= $escaper->escapeHtmlAttr(__('Move to Wishlist')) ?>"
+    >
+        <?= $lucideIcons->heartHtml('', 20, 20, ['aria-hidden' => 'true']) ?>
+    </button>
+<?php endif ?>

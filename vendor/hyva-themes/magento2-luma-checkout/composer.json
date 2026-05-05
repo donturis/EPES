@@ -1,0 +1,25 @@
+{
+  "name": "hyva-themes/magento2-luma-checkout",
+  "description": "Luma Fallback Checkout for Hyvä Themes",
+  "type": "magento2-module",
+  "require": {
+    "hyva-themes/magento2-theme-fallback": "*",
+    "magento/framework": "*",
+    "magento/module-checkout": ">=100.3.0"
+  },
+  "authors": [{
+      "name": "Hyvä Themes B.V.",
+      "email": "info@hyva.io"
+  }],
+  "license": [
+    "OSL-3.0"
+  ],
+  "autoload": {
+    "files": [
+      "src/registration.php"
+    ],
+    "psr-4": {
+      "Hyva\\LumaCheckout\\": "src/"
+    }
+  }
+}

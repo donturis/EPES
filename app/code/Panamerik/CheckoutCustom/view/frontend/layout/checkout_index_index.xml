@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Panamerik_CheckoutCustom::css/checkout-custom.css"/>
+        <css src="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" src_type="url"/>
+    </head>
+    <body>
+        <!-- Remove Luma header entirely -->
+        <referenceContainer name="header.container" remove="true"/>
+        <!-- Custom header at top of page.wrapper -->
+        <referenceContainer name="page.wrapper">
+            <block class="Magento\Framework\View\Element\Template" name="ep.checkout.header" template="Panamerik_CheckoutCustom::html/checkout-header.phtml" before="-"/>
+            <block class="Magento\Framework\View\Element\Template" name="ep.checkout.footer" template="Panamerik_CheckoutCustom::html/checkout-footer.phtml" after="-"/>
+        </referenceContainer>
+        <!-- Remove Luma footer -->
+        <referenceContainer name="footer-container" remove="true"/>
+        <referenceBlock name="copyright" remove="true"/>
+    </body>
+</page>

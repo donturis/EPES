@@ -1,0 +1,15 @@
+<?php
+/**
+ * Hyvä Themes - https://hyva.io
+ * Copyright © Hyvä Themes. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+use Magento\Wishlist\Block\Customer\Wishlist\Item\Column;
+
+/** @var Column $block */
+$product = $block->getItem()->getProduct();
+?>
+<div class="mb-2">
+    <?= $block->getReviewsSummaryHtml($product, 'short') ?>
+</div>

@@ -1,0 +1,30 @@
+<?php
+/**
+ * Hyvä Themes - https://hyva.io
+ * Copyright © Hyvä Themes. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+use Hyva\Theme\Model\ViewModelRegistry;
+use Hyva\Theme\ViewModel\HyvaCsp;
+use Magento\Framework\Escaper;
+
+/** @var Escaper $escaper */
+/** @var HyvaCsp $hyvaCsp */
+/** @var ViewModelRegistry $viewModels */
+?>
+<script>
+    function initProductItemImage() {
+        return {
+            updateImage() {
+                const image = this.$event.detail.medium;
+                if (!image) return;
+                this.$el.src = image;
+            }
+        }
+    }
+    window.addEventListener('alpine:init', () => {
+        Alpine.data('initProductItemImage', initProductItemImage);
+    }, { once: true });
+</script>
+<?php $hyvaCsp->registerInlineScript() ?>

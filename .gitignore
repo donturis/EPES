@@ -1,0 +1,37 @@
+# Magento 2 .gitignore
+# =====================
+
+# === Directories to exclude ===
+/generated/*
+!/generated/.htaccess
+/pub/media/*
+!/pub/media/.htaccess
+!/pub/media/customer/.htaccess
+!/pub/media/downloadable/.htaccess
+!/pub/media/import/.htaccess
+!/pub/media/theme_customization/.htaccess
+!/pub/media/wysiwyg/.htaccess
+/pub/static/*
+!/pub/static/.htaccess
+/var/*
+!/var/.htaccess
+
+# === Sensitive files ===
+/app/etc/env.php
+/auth.json
+
+# === IDE and OS files ===
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# === Node modules ===
+/node_modules/
+
+# === Temp/log files ===
+*.log
+*.tmp

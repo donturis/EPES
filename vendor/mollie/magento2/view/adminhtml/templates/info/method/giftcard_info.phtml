@@ -1,0 +1,33 @@
+<?php
+/**
+ * @var GiftcardInfo $block
+ * @var Escaper $escaper
+ */
+
+use Magento\Framework\Escaper;
+use Mollie\Payment\Block\Info\Method\GiftcardInfo;
+
+$details = $block->getAdditionalData()->getDetails();
+?>
+
+<table width="100%">
+    <?php foreach ($block->getUsedGiftcards() as $giftcard) { ?>
+        <tr>
+            <td>
+                <img src="<?= $escaper->escapeHtmlAttr($block->getViewFileUrl('Mollie_Payment::images/giftcard.svg')) ?>"/>
+            </td>
+            <td><?= $escaper->escapeHtml($giftcard->getIssuer()); ?></td>
+            <td><?= $escaper->escapeHtml($block->formatPrice($giftcard->getAmount()->getValue())); ?></td>
+        </tr>
+    <?php } ?>
+
+    <?php if ($block->hasRemainderAmount()): ?>
+        <tr>
+            <td>
+                <img src="<?= $escaper->escapeHtmlAttr($block->getViewFileUrl('Mollie_Payment::images/' . $details->getRemainderMethod() . '.svg')) ?>"/>
+            </td>
+            <td><?= $escaper->escapeHtml($block->getRemainderMethodInstance()->getTitle()); ?></td>
+            <td><?= $escaper->escapeHtml($block->formatPrice($details->getRemainderAmount()->getValue())); ?></td>
+        </tr>
+    <?php endif; ?>
+</table>

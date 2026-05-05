@@ -1,0 +1,29 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ *
+ * Modifications by Hyvä Themes (https://hyva.io) under the terms of the AFL 3.0.
+ */
+
+declare(strict_types=1);
+
+/** @var string  $htmlAttributes */
+/** @var string  $headAttributes */
+/** @var string  $headContent */
+/** @var string  $headAdditional */
+/** @var string  $bodyAttributes */
+/** @var string  $layoutContent */
+?>
+<!doctype html>
+<html <?= /* @noEscape */ $htmlAttributes ?>>
+<head <?= /* @noEscape */ $headAttributes ?>>
+    <?= /* @noEscape */ $headContent ?>
+    <?= /* @noEscape */ $headCritical ?? '' ?>
+    <?= /* @noEscape */ $headAssets ?? '' ?>
+    <?= /* @noEscape */ $headAdditional ?>
+</head>
+<body <?= /* @noEscape */ $bodyAttributes ?>>
+<?= /* @noEscape */ $layoutContent ?>
+</body>
+</html>

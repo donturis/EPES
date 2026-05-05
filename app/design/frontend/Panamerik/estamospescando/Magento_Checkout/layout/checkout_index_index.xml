@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Panamerik - Layout override to prevent FPC from caching the Hyvä checkout fallback error.
+ *
+ * When Hyva_ThemeFallback switches the theme to Luma for checkout, this layout is NOT loaded
+ * (Luma has its own checkout_index_index.xml). But if for any reason the theme switch doesn't
+ * fire (e.g., during FPC warm-up), this ensures the error page is never cached by FPC,
+ * so the next request will hit the controller again and the ThemeFallback plugin can fire.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="checkout" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="content">
+            <block class="Magento\Framework\View\Element\Text" name="fallback.module.missing" cacheable="false">
+                <arguments>
+                    <argument translate="true" name="text" xsi:type="string">
+                        <![CDATA[
+                        <div class="container">
+                            <p>No Checkout module installed.</p>
+                            <p>Either install Hyvä Checkout, the Luma Fallback Checkout, or another alternative checkout.</p>
+                            <p>Please refer to <a href="https://docs.hyva.io/checkout/index.html" target="_blank">the documentation</a> for more information.</p>
+                        </div>
+                        ]]>
+                    </argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

@@ -1,0 +1,282 @@
+<div class="payment-method" data-bind="css: { '_active': (getCode() == isChecked()) }">
+    <style>
+      </style>
+    <div class="payment-method-title field choice">
+        <input
+            type="radio"
+            name="payment[method]"
+            class="radio"
+            data-bind="attr: { 'id': getCode() }, value: getCode(), checked: isChecked, click: selectPaymentMethod, visible: isRadioButtonVisible()"
+        />
+        <label class="label" data-bind="attr: { 'for': getCode() }">
+            <!-- Mercado Pago Logo -->
+            <img
+                class="payment-icon mercadopago-payment-icon"
+                data-bind="attr: { alt: 'Mercado Pago', src:getCreditcardMini() }"
+            />
+            <!-- Mercado Pago Logo -->
+            <span data-bind="text: getTitle()"></span>
+        </label>
+
+        <!-- ko if: (existBanner() == true)-->
+        <div class="class-custom-banner-checkout">
+            <img
+                class="payment-banner-checkout"
+                data-bind="attr: { alt: 'MercadoPago Banner', src: getBannerUrl() }"
+            />
+        </div>
+        <!--/ko-->
+    </div>
+
+    <div class="payment-method-content">
+        <!-- ko foreach: getRegion('messages') -->
+            <!-- ko template: getTemplate() --><!-- /ko -->
+        <!--/ko-->
+        <!-- ko if: (getMpWalletButton() != 0)-->
+        <div class="mp-wb-card">
+            <div class="mp-wb-header">
+                <div class="mp-wb-header-fast-buy">
+                    <p><!-- ko i18n: 'Fast buy!'--><!-- /ko --></p>
+                    <i>⚡️</i>
+                </div>
+            </div>
+
+            <div class="mp-wb-body">
+                <div class="wp-wb-logo-frame">
+                    <img data-bind="attr: { alt: 'Mercado Pago', src: getMinilogo() }" />
+                </div>
+
+                <p class="mp-wb-body-title">
+                    <!-- ko i18n: 'Use your saved cards'--><!-- /ko -->
+                </p>
+                <p class="mp-wb-body-text">
+                    <!-- ko i18n: 'Pay without having to enter more data, in'--><!-- /ko -->
+                    <br />
+                    <!-- ko i18n: 'instalments and securely.'--><!-- /ko -->
+                </p>
+
+                <a class="wp-wb-body-button" data-bind="click: addWalletButton">
+                    <!-- ko i18n: 'Pay with Mercado Pago'--><!-- /ko -->
+                </a>
+            </div>
+        </div>
+
+        <hr class="mp-custom-hr" />
+        <!--/ko-->
+
+        <form
+            class="form"
+            id="co-mercadopago-form"
+            action="#"
+            method="post"
+            data-bind="mageInit: {
+                      'transparent':{
+                        'context': context(),
+                        'controller': getControllerName(),
+                        'gateway': getCode(),
+                        'orderSaveUrl':getPlaceOrderUrl(),
+                        'cgiUrl': getCgiUrl(),
+                        'dateDelim': getDateDelim(),
+                        'cardFieldsMap': getCardFieldsMap(),
+                        'nativeAction': getSaveOrderUrl()
+                      }, 'validation':[]}"
+        >
+            <!-- ko if: (getMpWalletButton() != 0)-->
+            <p class="mp-custom-title">
+                <!-- ko i18n: 'Or add your card details:'--><!-- /ko -->
+            </p>
+            <!--/ko-->
+
+            <!-- ko if: (getMpWalletButton() == 0)-->
+            <p class="mp-custom-title" style="margin:16px 0px;">
+                <!-- ko i18n: 'Add your card details'--><!-- /ko -->
+            </p>
+            <!--/ko-->
+            <div id="mercadopago-form">
+                <div class="mp-box-inputs mp-col-100">
+                    <label for="mpCardNumber">
+                        <!-- ko i18n: 'Card number'--><!-- /ko -->
+                        <em>*</em>
+                    </label>
+                    <div id="mpCardNumber"
+                    class="container"
+                    data-checkout="mpCardNumber"
+                    ></div>
+                    <small id="invalid_type_cardNumber_mp001" class="mp-form-error" data-main="#mpCardNumber"><!-- ko i18n: 'Card number should be a number'--><!-- /ko --></small>
+                    <small id="invalid_length_cardNumber_mp002" class="mp-form-error" data-main="#mpCardNumber"><!-- ko i18n: 'Card number should be of length between 8 and 19'--><!-- /ko --></small>
+                    <small id="invalid_length_cardNumber_mp011" class="mp-form-error" data-main="#mpCardNumber"><!-- ko i18n: 'Card number should be of length 15'--><!-- /ko --></small>
+                    <small id="invalid_length_cardNumber_mp014" class="mp-form-error" data-main="#mpCardNumber"><!-- ko i18n: 'Card number should be of length 16'--><!-- /ko --></small>
+                    <div class="mp-payment-methods-container" data-bind="foreach: getPaymentMethods()">
+                        <div class="mp-payment-method-logo-container">
+                            <img data-bind="attr: { src: src, alt: name }" class="img-fluid mp-payment-method-logo-image" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mp-box-inputs mp-col-100" id="mp-card-holder-div">
+                    <label for="mpCardholderName">
+                        <!-- ko i18n: 'Card holder full name'--><!-- /ko -->
+                        <em>*</em>
+                    </label>
+                    <input
+                        type="text"
+                        id="mpCardholderName"
+                        name="mercadopago_custom[cardholderName]"
+                        data-checkout="mpCardholderName"
+                        autocomplete="off"
+                    />
+
+                    <small id="mp-error-empty-cardholder-name" class="mp-form-error" data-main="#mpCardholderName"><!-- ko i18n: 'Invalid card holder full name'--><!-- /ko --></small>
+                </div>
+
+                <div class="mp-box-inputs mp-line mp-margin-bottom-0">
+                    <div class="mp-box-inputs mp-col-50">
+                        <label for="mpCardExpirationDate">
+                            <!-- ko i18n: 'Expiration date'--><!-- /ko -->
+                            <em>*</em>
+                        </label>
+                        <div
+                            id="mpCardExpirationDate"
+                            class="container"
+                            data-checkout="mpCardExpirationDate"
+                            style="width: 95%;"
+                        ></div>
+
+                        <small style="width: 95%;" id="invalid_type_expirationDate_expirationMonth_mp003" class="mp-form-error" data-main="#mpCardExpirationDate"><!-- ko i18n: 'Expiration month should be a number'--><!-- /ko --></small>
+                        <small style="width: 95%;" id="invalid_length_expirationDate_expirationYear_mp004" class="mp-form-error" data-main="#mpCardExpirationDate"><!-- ko i18n: 'Expiration year should be of length 2'--><!-- /ko --></small>
+                        <small style="width: 95%;" id="invalid_type_expirationDate_expirationYear_mp005" class="mp-form-error" data-main="#mpCardExpirationDate"><!-- ko i18n: 'Expiration year should be a number'--><!-- /ko --></small>
+                        <small style="width: 95%;" id="invalid_value_expirationDate_expirationYear_mp009" class="mp-form-error" data-main="#mpCardExpirationDat"><!-- ko i18n: 'Expiration year value should be greater or equal than current year'--><!-- /ko --></small>
+                        <small style="width: 95%;" id="invalid_value_expirationDate_expirationMonth_mp008" class="mp-form-error" data-main="#mpCardExpirationDate"><!-- ko i18n: 'Expiration month should be a value from 1 to 12'--><!-- /ko --></small>
+                        <small style="width: 95%;" id="invalid_value_expirationDate_expirationMonth_mp012" class="mp-form-error" data-main="#mpCardExpirationDate"><!-- ko i18n: 'Expiration month or expiration year value is invalid'--><!-- /ko --></small>
+
+                    </div>
+
+                    <div class="mp-box-inputs mp-col-50 mp-display-flex">
+                        <label for="mpSecurityCode">
+                            <!-- ko i18n: 'Security code'--><!-- /ko -->
+                            <em>*</em>
+                        </label>
+                        <div
+                            id="mpSecurityCode"
+                            class="container"
+                            data-checkout="mpSecurityCode"
+                        ></div>
+                        <small id="invalid_type_securityCode_mp006" class="mp-form-error" data-main="#mpSecurityCode"><!-- ko i18n: 'Security code should be a number'--><!-- /ko --></small>
+                        <small id="invalid_length_securityCode_mp007" class="mp-form-error" data-main="#mpCardExpirationDate"><!-- ko i18n: 'Security code should be of length 3 or 4'--><!-- /ko --></small>
+                        <small id="invalid_length_securityCode_mp010" class="mp-form-error" data-main="#mpCardExpirationDate"><!-- ko i18n: 'Security code should be of length 4'--><!-- /ko --></small>
+                        <small id="invalid_length_securityCode_mp013" class="mp-form-error" data-main="#mpCardExpirationDate"><!-- ko i18n: 'Security code should be of length 3'--><!-- /ko --></small>
+                    </div>
+                </div>
+
+                <div class="mp-box-inputs mp-line mp-margin-top-0" id="mp-doc-div">
+                    <div class="mp-box-inputs mp-col-35 mp-docType" id="mp-doc-type-div">
+                        <label for="mpDocType">
+                            <!-- ko i18n: 'ID'--><!-- /ko -->
+                            <em>*</em>
+                        </label>
+                        <select id="mpDocType" data-checkout="mpDocType" name="mercadopago_custom[docType]" style="width: 95%;"></select>
+                    </div>
+
+                    <div class="mp-box-inputs mp-col-65 mp-docNumber " id="mp-doc-number-div">
+                        <label for="mpDocNumber">
+                            <!-- ko i18n: 'Number of the payer ID'--><!-- /ko -->
+                            <em>*</em>
+                        </label>
+                        <input
+                            type="text"
+                            id="mpDocNumber"
+                            data-checkout="mpDocNumber"
+                            name="mercadopago_custom[docNumber]"
+                            autocomplete="off"
+                            onkeyup="maskInput(this, mintegerletter);"
+                        />
+
+                        <small style="width: 95%;" id="mp-error-empty-doc-number" class="mp-form-error" data-main="#mpDocNumber"><!-- ko i18n: 'Invalid document number'--><!-- /ko --></small>
+
+                    </div>
+                </div>
+
+                <div class="mp-box-inputs mp-col-100 mp-issuer" id="mp-issuer-div" style="display: none;">
+                    <label for="mpIssuer">
+                        <!-- ko i18n: 'Issuer'--><!-- /ko -->
+                        <em>*</em>
+                    </label>
+                    <select id="mpIssuer" data-checkout="mpIssuer" name="mercadopago_custom[issuer]"></select>
+                    <small id="id-issuer-status" class="mp-form-error"></small>
+                </div>
+            </div>
+            <!-- end #mercadopago-form -->
+
+            <div id="mp-box-installments">
+                <div class="mp-box-inputs mp-col-100" id="mp-box-installments-selector">
+                    <label for="mpInstallments">
+                        <!-- ko i18n: 'Installments'--><!-- /ko -->
+                    </label>
+                    <select id="mpInstallments" data-checkout="mpInstallments"></select>
+                    <small id="id-installments-status" class="mp-form-error" data-main="#mpInstallments"></small>
+                </div>
+
+                <div id="mp-box-input-tax-cft">
+                    <div id="mp-box-input-tax-tea">
+                        <div id="mp-tax-tea-text"></div>
+                    </div>
+                    <div id="mp-tax-cft-text"></div>
+                </div>
+            </div>
+
+            <div class="mp-box-inputs mp-col-100">
+                <div class="mp-protect-buy">
+                    <img data-bind="attr: { alt: 'Mercado Pago', src: getGrayMinilogo() }" />
+                    <p><!-- ko i18n: 'Payment processed by Mercado Pago'--><!-- /ko --></p>
+                </div>
+
+                <hr class="mp-custom-hr" />
+            </div>
+
+            <div class="mp-line">
+                <div class="mp-box-inputs mp-col-25">
+                    <div id="mp-box-loading"></div>
+                </div>
+            </div>
+
+            <div class="payment-method-billing-address mp-custom-display-inline-block">
+                <!-- ko foreach: $parent.getRegion(getBillingAddressFormName()) -->
+                    <!-- ko template: getTemplate() --><!-- /ko -->
+                <!--/ko-->
+            </div>
+            <div class="wb-cho-button-frame"></div>
+        </form>
+
+        <div afterRender="initApp()"></div>
+
+        <div class="checkout-agreements-block">
+            <!-- ko foreach: $parent.getRegion('before-place-order') -->
+                <!-- ko template: getTemplate() --><!-- /ko -->
+            <!--/ko-->
+        </div>
+
+        <div class="actions-toolbar">
+            <div class="primary mp-d-flex-baseline">
+                <p class="mp-mr-20">
+                    <!-- ko i18n: 'By continuing, you agree to our '--><!-- /ko -->
+                    <a data-bind="attr: {href: getFingerPrintLink(), title: $t('link')}" target="_blank">
+                        <!-- ko i18n: 'Terms and Conditions.'--><!-- /ko -->
+                    </a>
+                </p>
+                <button
+                    data-role="review-save"
+                    type="submit"
+                    id="mp-custom-save-payment"
+                    data-bind="attr: {title: $t('Place Order')},
+                               enable: (getCode() == isChecked()),
+                               click: prePlaceOrder,
+                               css: { disabled: !isPlaceOrderActionAllowed() }"
+                    class="action primary checkout"
+                    disabled
+                >
+                    <span data-bind="i18n: 'Place Order'"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

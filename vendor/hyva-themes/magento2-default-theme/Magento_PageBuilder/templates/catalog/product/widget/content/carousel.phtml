@@ -1,0 +1,61 @@
+<?php
+/**
+ * Hyvä Themes - https://hyva.io
+ * Copyright © Hyvä Themes. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+declare(strict_types=1);
+
+use Hyva\Theme\Model\ViewModelRegistry;
+use Hyva\Theme\ViewModel\ProductListItem;
+use Hyva\Theme\ViewModel\ProductPage;
+use Magento\Catalog\Block\Product\ListProduct;
+use Magento\Catalog\Block\Product\ReviewRendererInterface;
+use Magento\Framework\Escaper;
+
+/** @var ListProduct $block */
+/** @var Escaper $escaper */
+/** @var ViewModelRegistry $viewModels */
+
+$sliderName = $block->getSliderName() ?: str_replace(['.', '/', '\\'], '_', $block->getNameInLayout());
+$cssClasses = $block->getCssClasses() ?: 'widget-product-carousel';
+
+// There is is sadly no clean option to display a A11Y title for the section.
+// So the generic one has to do, until fixed in M2 Core
+$title = 'Page Builder Products';
+
+$type = 'widget-product-carousel';
+$mode = 'grid';
+$image = 'new_products_content_widget_grid';
+$templateType = ReviewRendererInterface::SHORT_VIEW;
+$description = false;
+
+$productViewModel = $viewModels->require(ProductPage::class);
+$productListItemViewModel = $viewModels->require(ProductListItem::class);
+?>
+
+<?php if ($block->getProductCollection() && $block->getProductCollection()->getSize()): ?>
+    <?php $items = $block->getProductCollection()->getItems(); ?>
+
+    <section
+        id="<?= $escaper->escapeHtmlAttr($sliderName) ?>"
+        class="<?= $escaper->escapeHtmlAttr($cssClasses) ?>"
+        data-slider-type="<?= $escaper->escapeHtmlAttr($type) ?>"
+    >
+        <a
+            href="#<?= $escaper->escapeHtmlAttr($sliderName) ?>-slider-end"
+            class="sr-only focus:not-sr-only focus:absolute focus:p-2 focus:bg-white"
+        ><?= $escaper->escapeHtml(__('Press to skip carousel')) ?></a>
+
+        <div class="snap-track md:[--snap-cols:2] lg:[--snap-cols:3] xl:[--snap-cols:4]" data-track>
+            <?php foreach ($items as $item): ?>
+                <div class="flex flex-col">
+                    <?= $productListItemViewModel->getItemHtml($item, $block, $mode, $templateType, $image, $description) ?>
+                </div>
+            <?php endforeach ?>
+        </div>
+        <?= $block->getBlockHtml('pagebuilder.carousel.nav') ?>
+        <span id="<?= $escaper->escapeHtmlAttr($sliderName) ?>-slider-end" tabindex="-1"></span>
+    </section>
+<?php endif ?>

@@ -1,0 +1,29 @@
+<?php
+/**
+ * Panamerik - https://panamerik.com
+ * Custom footer for Estamos Pescando
+ */
+
+declare(strict_types=1);
+
+use Magento\Framework\View\Element\Template;
+use Magento\Framework\Escaper;
+
+/** @var Template $block */
+/** @var Escaper $escaper */
+?>
+<div class="bg-gray-100 border-t border-gray-300 pb-16">
+    <div class="container py-8">
+        <div class="flex flex-wrap gap-y-16">
+            <?php foreach ($block->getChildNames() as $childName): ?>
+                <?= $childName !== 'footer-copyright' ? $block->getBlockHtml($childName) : '' ?>
+            <?php endforeach; ?>
+        </div>
+    </div>
+    <div class="bg-surface border-t border-b border-gray-300">
+        <div class="container py-6 flex items-center justify-between sm:flex-row flex-col gap-4">
+            <p class="text-sm text-gray-500">Ecommerce by <a href="https://panamerik.com" target="_blank" rel="noopener" class="font-medium text-gray-600 hover:text-gray-900 transition-colors">Panamerik</a></p>
+            <p><small class="text-sm text-gray-500">Copyright &copy; <?= date('Y') ?> Estamos Pescando. Todos los derechos reservados.</small></p>
+        </div>
+    </div>
+</div>

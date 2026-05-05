@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Hyvä Themes - https://hyva.io
+ * Copyright © Hyvä Themes. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd" extends="pagebuilder_base_form">
+    <fieldset name="general">
+        <field name="loading" sortOrder="28" formElement="checkbox">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">lazy</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>boolean</dataType>
+                <visible>true</visible>
+                <dataType>text</dataType>
+                <label translate="true">Lazy Loading</label>
+                <notice translate="true">Enable for images below the fold, Disable for the LCP image.</notice>
+                <dataScope>loading</dataScope>
+            </settings>
+            <formElements>
+                <checkbox>
+                    <settings>
+                        <valueMap>
+                            <map name="false" xsi:type="string">eager</map>
+                            <map name="true" xsi:type="string">lazy</map>
+                        </valueMap>
+                        <prefer>toggle</prefer>
+                    </settings>
+                </checkbox>
+            </formElements>
+        </field>
+        <field name="native_dimensions" sortOrder="30" formElement="checkbox" component="Hyva_Theme/js/pagebuilder/form/element/image-dimensions-toggle">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">true</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>boolean</dataType>
+                <visible>true</visible>
+                <dataType>text</dataType>
+                <label translate="true">Use native image dimensions.</label>
+                <dataScope>native_dimensions</dataScope>
+            </settings>
+            <formElements>
+                <checkbox>
+                    <settings>
+                        <valueMap>
+                            <map name="false" xsi:type="string">false</map>
+                            <map name="true" xsi:type="string">true</map>
+                        </valueMap>
+                        <prefer>toggle</prefer>
+                    </settings>
+                </checkbox>
+            </formElements>
+        </field>
+        <!-- TODO: Use the same naming as Magento for backward compatibility -->
+        <field name="desktop_image_width" sortOrder="31" formElement="input" component="Hyva_Theme/js/pagebuilder/form/element/image-dimension-input">
+            <settings>
+                <label translate="true">Desktop Image Width</label>
+                <visible>true</visible>
+                <dataType>text</dataType>
+                <validation>
+                    <rule name="validate-string" xsi:type="boolean">true</rule>
+                </validation>
+                <imports>
+                    <link name="visible">${$.parentName}.native_dimensions:useManualDimensions</link>
+                </imports>
+            </settings>
+        </field>
+        <!-- TODO: Use the same naming as Magento for backward compatibility -->
+        <field name="desktop_image_height" sortOrder="32" formElement="input" component="Hyva_Theme/js/pagebuilder/form/element/image-dimension-input">
+            <settings>
+                <label translate="true">Desktop Image Height</label>
+                <visible>true</visible>
+                <dataType>text</dataType>
+                <validation>
+                    <rule name="validate-string" xsi:type="boolean">true</rule>
+                </validation>
+                <imports>
+                    <link name="visible">${$.parentName}.native_dimensions:useManualDimensions</link>
+                </imports>
+            </settings>
+        </field>
+        <!-- TODO: Use the same naming as Magento for backward compatibility -->
+        <field name="mobile_image_width" sortOrder="33" formElement="input" component="Hyva_Theme/js/pagebuilder/form/element/image-dimension-input">
+            <settings>
+                <label translate="true">Mobile Image Width</label>
+                <visible>true</visible>
+                <dataType>text</dataType>
+                <validation>
+                    <rule name="validate-string" xsi:type="boolean">true</rule>
+                </validation>
+                <imports>
+                    <link name="visible">${$.parentName}.native_dimensions:useManualDimensions</link>
+                </imports>
+            </settings>
+        </field>
+        <!-- TODO: Use the same naming as Magento for backward compatibility -->
+        <field name="mobile_image_height" sortOrder="34" formElement="input" component="Hyva_Theme/js/pagebuilder/form/element/image-dimension-input">
+            <settings>
+                <label translate="true">Mobile Image Height</label>
+                <visible>true</visible>
+                <dataType>text</dataType>
+                <validation>
+                    <rule name="validate-string" xsi:type="boolean">true</rule>
+                </validation>
+                <imports>
+                    <link name="visible">${$.parentName}.native_dimensions:useManualDimensions</link>
+                </imports>
+            </settings>
+        </field>
+        <!-- Magento named fields, will be used in the futere update -->
+        <field name="image_attribute_width" formElement="input" sortOrder="10">
+            <settings>
+                <validation>
+                    <rule name="validate-digits" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>number</dataType>
+                <label translate="true">Image Attribute Width</label>
+                <addAfter translate="true">px</addAfter>
+                <additionalClasses>
+                    <class name="admin__field-small">true</class>
+                </additionalClasses>
+                <dataScope>image_attribute_width</dataScope>
+                <!-- Hide until support is added -->
+                <visible>false</visible>
+            </settings>
+        </field>
+        <field name="image_attribute_height" formElement="input" sortOrder="11">
+            <settings>
+                <validation>
+                    <rule name="validate-digits" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>number</dataType>
+                <label translate="true">Image Attribute Height</label>
+                <addAfter translate="true">px</addAfter>
+                <additionalClasses>
+                    <class name="admin__field-small">true</class>
+                </additionalClasses>
+                <dataScope>image_attribute_height</dataScope>
+                <!-- Hide until support is added -->
+                <visible>false</visible>
+            </settings>
+        </field>
+        <field name="mobile_image_attribute_width" formElement="input" sortOrder="12">
+            <settings>
+                <validation>
+                    <rule name="validate-digits" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>number</dataType>
+                <label translate="true">Mobile Image Attribute Width</label>
+                <addAfter translate="true">px</addAfter>
+                <additionalClasses>
+                    <class name="admin__field-small">true</class>
+                </additionalClasses>
+                <dataScope>mobile_image_attribute_width</dataScope>
+                <!-- Hide until support is added -->
+                <visible>false</visible>
+            </settings>
+        </field>
+        <field name="mobile_image_attribute_height" formElement="input" sortOrder="13">
+            <settings>
+                <validation>
+                    <rule name="validate-digits" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>number</dataType>
+                <label translate="true">Mobile Image Attribute Height</label>
+                <addAfter translate="true">px</addAfter>
+                <additionalClasses>
+                    <class name="admin__field-small">true</class>
+                </additionalClasses>
+                <dataScope>mobile_image_attribute_height</dataScope>
+                <!-- Hide until support is added -->
+                <visible>false</visible>
+            </settings>
+        </field>
+    </fieldset>
+</form>

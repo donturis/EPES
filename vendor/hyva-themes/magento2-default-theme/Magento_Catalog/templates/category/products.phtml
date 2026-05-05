@@ -1,0 +1,22 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ *
+ * Modifications by Hyvä Themes (https://hyva.io) under the terms of the AFL 3.0.
+ */
+
+use Magento\Catalog\Block\Category\View;
+
+/** @var View $block */
+
+/**
+ * Keep the following empty line intact - it resolves a display issue if on categories without products or CMS content.
+ *
+ * @see https://gitlab.hyva.io/hyva-themes/magento2-default-theme/-/issues/312
+ */
+?>
+
+<?php if (!$block->isContentMode() || $block->isMixedMode()): ?>
+    <?= $block->getProductListHtml() ?>
+<?php endif; ?>

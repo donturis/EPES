@@ -1,0 +1,26 @@
+<?php
+declare(strict_types=1);
+use Magento\Framework\View\Element\Template;
+use Magento\Framework\Escaper;
+/** @var Template $block */
+/** @var Escaper $escaper */
+$baseUrl = $block->getBaseUrl();
+$year = date('Y');
+?>
+<div class="ep-checkout-footer">
+    <div class="ep-checkout-footer-inner">
+        <div class="ep-checkout-footer-links">
+            <a href="<?= $escaper->escapeUrl($baseUrl) ?>aviso-de-privacidad/">Aviso de Privacidad</a>
+            <span class="ep-footer-sep">&middot;</span>
+            <a href="<?= $escaper->escapeUrl($baseUrl) ?>envios/">Envíos</a>
+            <span class="ep-footer-sep">&middot;</span>
+            <a href="<?= $escaper->escapeUrl($baseUrl) ?>formas-de-comprar/">Formas de Compra</a>
+            <span class="ep-footer-sep">&middot;</span>
+            <a href="<?= $escaper->escapeUrl($baseUrl) ?>contact/">Contacto</a>
+        </div>
+        <div class="ep-checkout-footer-bottom">
+            <p class="ep-checkout-copyright">Copyright &copy; <?= $year ?> Estamos Pescando. Todos los derechos reservados.</p>
+            <p class="ep-checkout-credit">Ecommerce by <a href="https://panamerik.com" target="_blank" rel="noopener">Panamerik</a></p>
+        </div>
+    </div>
+</div>

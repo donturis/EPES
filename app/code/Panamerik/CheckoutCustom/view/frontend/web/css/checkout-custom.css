@@ -1,0 +1,383 @@
+/* ============================================
+   Panamerik Checkout Custom - Estamos Pescando
+   Complete CSS for checkout matching Hyva site
+   ============================================ */
+
+/* === Font === */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+/* === CSS Variables === */
+:root {
+    --ep-primary: #1f48c5;
+    --ep-dark: #1a365d;
+    --ep-accent: #0077cb;
+    --ep-cta: #e53e3e;
+    --ep-white: #ffffff;
+    --ep-gray-50: #f7fafc;
+    --ep-gray-100: #edf2f7;
+    --ep-gray-200: #e2e8f0;
+    --ep-gray-300: #cbd5e0;
+    --ep-gray-500: #718096;
+    --ep-gray-700: #4a5568;
+    --ep-gray-900: #1a202c;
+    --ep-font: 'Inter', system-ui, -apple-system, sans-serif;
+    --ep-radius: 8px;
+    --ep-shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+    --ep-shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+}
+
+/* === Global Overrides for Checkout Page === */
+.checkout-index-index {
+    font-family: var(--ep-font) !important;
+    background: var(--ep-gray-50) !important;
+}
+
+.checkout-index-index * {
+    font-family: var(--ep-font) !important;
+}
+
+/* === Hide ALL Luma Default Elements === */
+.checkout-index-index .page-header,
+.checkout-index-index .panel.wrapper,
+.checkout-index-index .panel.header,
+.checkout-index-index .header.content,
+.checkout-index-index .sections.nav-sections,
+.checkout-index-index .nav-sections,
+.checkout-index-index .page-footer,
+.checkout-index-index .footer.content,
+.checkout-index-index .footer-container,
+.checkout-index-index .copyright,
+.checkout-index-index .authentication-wrapper {
+    display: none !important;
+}
+
+/* === Custom Header === */
+.ep-checkout-header {
+    background: var(--ep-white) !important;
+    border-bottom: 2px solid var(--ep-primary) !important;
+    box-shadow: var(--ep-shadow) !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    width: 100%;
+}
+
+.ep-checkout-header-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 24px;
+    min-height: 64px;
+}
+
+.ep-checkout-logo img {
+    height: 48px;
+    width: auto;
+    display: block;
+}
+
+.ep-checkout-header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.ep-checkout-secure {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--ep-gray-500);
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.ep-checkout-secure svg {
+    color: #38a169;
+}
+
+.ep-checkout-back {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--ep-primary);
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none !important;
+    transition: color 0.2s;
+}
+
+.ep-checkout-back:hover {
+    color: var(--ep-dark);
+    text-decoration: none !important;
+}
+
+/* === Page Wrapper === */
+.checkout-index-index .page-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* === Main Content === */
+.checkout-index-index .page-main {
+    flex: 1;
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 24px 24px 48px;
+}
+
+/* === Progress Bar === */
+.checkout-index-index .opc-progress-bar {
+    margin: 0 auto 32px !important;
+    max-width: 500px;
+    display: flex;
+    justify-content: center;
+}
+
+.checkout-index-index .opc-progress-bar-item {
+    position: relative;
+}
+
+.checkout-index-index .opc-progress-bar-item > span {
+    font-family: var(--ep-font) !important;
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--ep-gray-500);
+}
+
+.checkout-index-index .opc-progress-bar-item._active > span,
+.checkout-index-index .opc-progress-bar-item._complete > span {
+    color: var(--ep-primary);
+}
+
+.checkout-index-index .opc-progress-bar-item._active:before,
+.checkout-index-index .opc-progress-bar-item._complete:before {
+    background: var(--ep-primary) !important;
+}
+
+.checkout-index-index .opc-progress-bar-item._active > span:before,
+.checkout-index-index .opc-progress-bar-item._complete > span:before {
+    background: var(--ep-primary) !important;
+    border-color: var(--ep-primary) !important;
+}
+
+/* === Checkout Form Sections === */
+.checkout-index-index .checkout-shipping-address,
+.checkout-index-index .checkout-shipping-method,
+.checkout-index-index .checkout-payment-method {
+    background: var(--ep-white);
+    border-radius: var(--ep-radius);
+    box-shadow: var(--ep-shadow);
+    padding: 24px;
+    margin-bottom: 24px;
+}
+
+.checkout-index-index .step-title {
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    color: var(--ep-dark) !important;
+    border-bottom: 2px solid var(--ep-primary) !important;
+    padding-bottom: 12px !important;
+    margin-bottom: 20px !important;
+}
+
+/* === Form Fields === */
+.checkout-index-index .field .label {
+    font-weight: 500 !important;
+    color: var(--ep-gray-700) !important;
+    font-size: 13px !important;
+    margin-bottom: 4px !important;
+}
+
+.checkout-index-index .field .control input,
+.checkout-index-index .field .control select,
+.checkout-index-index .field .control textarea {
+    border: 1px solid var(--ep-gray-300) !important;
+    border-radius: 6px !important;
+    padding: 10px 12px !important;
+    font-size: 14px !important;
+    color: var(--ep-gray-900) !important;
+    background: var(--ep-white) !important;
+    transition: border-color 0.2s, box-shadow 0.2s !important;
+    height: auto !important;
+}
+
+.checkout-index-index .field .control input:focus,
+.checkout-index-index .field .control select:focus,
+.checkout-index-index .field .control textarea:focus {
+    border-color: var(--ep-primary) !important;
+    box-shadow: 0 0 0 3px rgba(31, 72, 197, 0.1) !important;
+    outline: none !important;
+}
+
+/* === Buttons === */
+.checkout-index-index button.action.primary,
+.checkout-index-index button.action.continue {
+    background: var(--ep-primary) !important;
+    border: none !important;
+    border-radius: 6px !important;
+    color: var(--ep-white) !important;
+    font-weight: 600 !important;
+    font-size: 15px !important;
+    padding: 12px 32px !important;
+    cursor: pointer !important;
+    transition: background 0.2s !important;
+    text-transform: none !important;
+    letter-spacing: 0 !important;
+}
+
+.checkout-index-index button.action.primary:hover,
+.checkout-index-index button.action.continue:hover {
+    background: var(--ep-dark) !important;
+}
+
+/* === Order Summary === */
+.checkout-index-index .opc-block-summary {
+    background: var(--ep-white) !important;
+    border-radius: var(--ep-radius) !important;
+    box-shadow: var(--ep-shadow) !important;
+    padding: 20px !important;
+}
+
+.checkout-index-index .opc-block-summary > .title {
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    color: var(--ep-dark) !important;
+    border-bottom: 2px solid var(--ep-primary) !important;
+    padding-bottom: 12px !important;
+}
+
+.checkout-index-index .opc-block-summary .table-totals th,
+.checkout-index-index .opc-block-summary .table-totals td {
+    font-size: 14px !important;
+    color: var(--ep-gray-700) !important;
+}
+
+.checkout-index-index .opc-block-summary .grand.totals th,
+.checkout-index-index .opc-block-summary .grand.totals td {
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    color: var(--ep-dark) !important;
+}
+
+/* === Shipping Methods === */
+.checkout-index-index .table-checkout-shipping-method {
+    width: 100%;
+}
+
+.checkout-index-index .table-checkout-shipping-method td {
+    padding: 10px 8px !important;
+    font-size: 14px !important;
+}
+
+.checkout-index-index .table-checkout-shipping-method .row:hover {
+    background: var(--ep-gray-50) !important;
+}
+
+/* === Custom Footer === */
+.ep-checkout-footer {
+    background: var(--ep-white) !important;
+    border-top: 1px solid var(--ep-gray-200) !important;
+    padding: 0 !important;
+    margin-top: auto;
+    width: 100%;
+}
+
+.ep-checkout-footer-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 24px;
+    text-align: center;
+}
+
+.ep-checkout-footer-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+}
+
+.ep-checkout-footer-links a {
+    color: var(--ep-gray-500) !important;
+    text-decoration: none !important;
+    font-size: 13px !important;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.ep-checkout-footer-links a:hover {
+    color: var(--ep-primary) !important;
+}
+
+.ep-footer-sep {
+    color: var(--ep-gray-300);
+    font-size: 13px;
+}
+
+.ep-checkout-footer-bottom {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.ep-checkout-copyright {
+    color: var(--ep-gray-500) !important;
+    font-size: 12px !important;
+    margin: 0 !important;
+}
+
+.ep-checkout-credit {
+    color: var(--ep-gray-500) !important;
+    font-size: 12px !important;
+    margin: 0 !important;
+}
+
+.ep-checkout-credit a {
+    color: var(--ep-primary) !important;
+    text-decoration: none !important;
+    font-weight: 500;
+}
+
+/* === Loading Mask === */
+.checkout-index-index .loading-mask {
+    background: rgba(255,255,255,0.7) !important;
+}
+
+/* === Responsive === */
+@media (max-width: 768px) {
+    .ep-checkout-header-inner {
+        padding: 10px 16px;
+        min-height: 56px;
+    }
+    
+    .ep-checkout-logo img {
+        height: 36px;
+    }
+    
+    .ep-checkout-secure {
+        display: none;
+    }
+    
+    .checkout-index-index .page-main {
+        padding: 16px 12px 32px;
+    }
+    
+    .ep-checkout-footer-links {
+        flex-direction: column;
+        gap: 4px;
+    }
+    
+    .ep-footer-sep {
+        display: none;
+    }
+}
+

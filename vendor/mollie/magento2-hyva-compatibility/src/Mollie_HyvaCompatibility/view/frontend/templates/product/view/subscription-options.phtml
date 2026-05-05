@@ -1,0 +1,89 @@
+<?php
+/*
+ * Copyright Magmodules.eu. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+use Hyva\Theme\Model\ViewModelRegistry;
+use Hyva\Theme\ViewModel\HeroiconsOutline;
+use Magento\Framework\Escaper;
+use Mollie\Subscriptions\Block\Frontend\Product\View\SubscriptionOptions;
+
+/** @var ViewModelRegistry $viewModels */
+/** @var Escaper $escaper */
+/** @var SubscriptionOptions $block */
+
+/** @var HeroiconsOutline $heroicons */
+$heroicons = $viewModels->require(HeroiconsOutline::class);
+
+$showPriceInSubscriptionButton = method_exists($block, 'showPriceInSubscriptionButton') && $block->showPriceInSubscriptionButton();
+?>
+<div class="mollie-subscription-options flex flex-wrap gap-2"
+     x-data="mollieSubscriptionOptions"
+>
+    <input type="hidden" id="mollie_subscription_purchase" name="purchase" value="subscription" form="product_addtocart_form" />
+    <input type="hidden" id="mollie_subscription_option" name="recurring_metadata[option_id]" form="product_addtocart_form" />
+
+    <?php if ($block->allowOneTimePurchase()): ?>
+        <button
+            @click="setOption"
+            type="submit"
+            class="btn btn-secondary action primary tocart product-addtocart-button select-subscription"
+            value="onetimepurchase"
+            title="<?= __('One Time Purchase') ?>"
+            form="product_addtocart_form"
+        >
+            <?= __('One Time Purchase'); ?>
+
+            <?php if ($showPriceInSubscriptionButton): ?>
+                <?= $block->formatPrice($block->getProductPrice()) ?>
+            <?php endif; ?>
+        </button>
+    <?php endif; ?>
+
+    <?php foreach ($block->getOptions() as $option): ?>
+        <button
+            @click="setOption"
+            type="submit"
+            class="action btn btn-primary tocart product-addtocart-button select-subscription"
+            value="<?= $escaper->escapeHtmlAttr($option->getIdentifier()); ?>"
+            title="<?= $escaper->escapeHtmlAttr($option->getTitle()) ?>"
+            form="product_addtocart_form"
+        >
+            <?= $heroicons->shoppingCartHtml('border-current inline'); ?>
+            <span class="block whitespace-nowrap">
+                <?= $escaper->escapeHtml($option->getTitle()); ?>
+
+                <?php if ($showPriceInSubscriptionButton && $option->getPrice()): ?>
+                    <?= $block->formatPrice($option->getPrice()) ?>
+                <?php endif; ?>
+            </span>
+        </button>
+    <?php endforeach; ?>
+
+    <script>
+        function mollieSubscriptionOptions() {
+            return {
+                setOption() {
+                    if (this.$el.value === 'onetimepurchase') {
+                        document.getElementById('mollie_subscription_option').value = 'onetimepurchase';
+                        document.getElementById('mollie_subscription_purchase').value = 'onetime';
+                        return;
+                    }
+
+                    document.getElementById('mollie_subscription_option').value = this.$el.value;
+                }
+            }
+        }
+
+        window.addEventListener(
+            'alpine:init',
+            () => Alpine.data('mollieSubscriptionOptions', mollieSubscriptionOptions),
+            {once: true}
+        )
+    </script>
+    <?php isset($hyvaCsp) && $hyvaCsp->registerInlineScript() ?>
+
+    <?php /** Instant purchase should be hidden when subscriptions are active */ ?>
+    <style>#instant-purchase {display: none;}</style>
+</div>

@@ -1,0 +1,26 @@
+<?php
+declare(strict_types=1);
+use Magento\Framework\View\Element\Template;
+use Magento\Framework\Escaper;
+/** @var Template $block */
+/** @var Escaper $escaper */
+$logoSrc = 'https://estamospescando.com/media/logo/websites/1/logo-epes.png';
+$homeUrl = $block->getBaseUrl();
+?>
+<div class="ep-checkout-header">
+    <div class="ep-checkout-header-inner">
+        <a href="<?= $escaper->escapeUrl($homeUrl) ?>" class="ep-checkout-logo">
+            <img src="<?= $escaper->escapeUrl($logoSrc) ?>" alt="Estamos Pescando" width="160" height="63" loading="eager">
+        </a>
+        <div class="ep-checkout-header-right">
+            <span class="ep-checkout-secure">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                Compra Segura
+            </span>
+            <a href="<?= $escaper->escapeUrl($homeUrl) ?>checkout/cart/" class="ep-checkout-back">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                Volver al carrito
+            </a>
+        </div>
+    </div>
+</div>

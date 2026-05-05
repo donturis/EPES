@@ -1,0 +1,202 @@
+<?php
+/**
+ * Hyvä Themes - https://hyva.io
+ * Copyright © Hyvä Themes. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+declare(strict_types=1);
+
+use Hyva\Theme\Model\ViewModelRegistry;
+use Hyva\Theme\ViewModel\LucideIcons;
+use Hyva\Theme\ViewModel\ProductCompare;
+use Hyva\Theme\ViewModel\ProductPrice;
+use Hyva\Theme\ViewModel\Wishlist;
+use Magento\Framework\Escaper;
+use Magento\Catalog\Block\Widget\RecentlyViewed;
+
+/** @var RecentlyViewed $block */
+/** @var Escaper $escaper */
+/** @var ViewModelRegistry $viewModels */
+
+/** @var LucideIcons $lucideIcons */
+$lucideIcons = $viewModels->require(LucideIcons::class);
+
+/** @var Wishlist $wishlistViewModel */
+$wishlistViewModel = $viewModels->require(Wishlist::class);
+
+/** @var ProductCompare $compareViewModel */
+$compareViewModel = $viewModels->require(ProductCompare::class);
+
+/** @var ProductPrice $productPrice */
+$productPrice = $viewModels->require(ProductPrice::class);
+
+$sliderName = $block->getSliderName() ?: str_replace(['.', '/', '\\'], '_', $block->getNameInLayout());
+$title = $block->getTitle() ?: __('Recently Viewed Products');
+$ariaLabel = $block->getTitle() ?: str_replace(['.', '/', '\\', '_'], ' ', $block->getNameInLayout());
+$headingTag = $block->getHeadingTag() ?: 'h2';
+$cssClasses = $block->getCssClasses() ?: 'product-slider my-8';
+$headingCssClasses = $block->getHeadingCssClasses() ?: 'text-2xl font-medium';
+$columnCount = $block->getColumnCount() ?? 5;
+$sliderClasses = implode(' ', array_filter([
+    'snap-track',
+    $columnCount > 1 ? 'md:[--snap-cols:2]' : '',
+    $columnCount > 2 ? 'lg:[--snap-cols:3]' : '',
+    $columnCount > 3 ? 'xl:[--snap-cols:4]' : '',
+    $columnCount > 4 ? '2xl:[--snap-cols:5]' : '',
+    $block->getSliderCssClasses()
+]));
+
+$showHeading = $block->getShowHeading() ?? true;
+$showPager = $block->getShowPager() ?? true;
+
+$type = 'generic';
+
+$widgetAttributesToShow = explode(',', (string) $block->getData('show_attributes'));
+$widgetButtonsToShow = explode(',', (string) $block->getData('show_buttons'));
+$widgetImageWidth = $block->getImageWidth() ?: 360;
+$widgetImageHeight = $block->getImageHeight() ?: 360;
+
+$jsTemplate = 'Magento_Catalog::product/widget/viewed/js/recently-viewed-products.phtml';
+/* @noEscape */ echo $block->fetchView($block->getTemplateFile($jsTemplate));
+?>
+
+<div
+    class="flow-root"
+    x-data="initRecentlyViewedProductsComponent"
+    x-defer="intersect"
+    :style="minHeight"
+>
+    <template x-if="hasProducts">
+        <section
+            id="<?= $escaper->escapeHtmlAttr($sliderName) ?>"
+            class="snap-slider <?= $escaper->escapeHtmlAttr($cssClasses) ?>"
+            aria-label="<?= $escaper->escapeHtmlAttr($ariaLabel); ?>"
+            data-slider-type="<?= $escaper->escapeHtmlAttr($type) ?>"
+            <?php if ($showPager): ?>
+            x-snap-slider.auto-pager.group-pager
+            <?php else: ?>
+            x-snap-slider
+            <?php endif; ?>
+        >
+            <a
+                href="#<?= $escaper->escapeHtmlAttr($sliderName) ?>-slider-end"
+                class="sr-only focus:not-sr-only focus:absolute focus:z-30 focus:bg-white"
+            ><?= $escaper->escapeHtml(__('Press to skip carousel')) ?></a>
+
+            <div class="flex gap-2 justify-between items-center">
+                <?php if ($showHeading): ?>
+                    <?= $escaper->escapeHtml(str_replace(
+                        ['%1', '%2', '%3'],
+                        [$headingTag, $title, $headingCssClasses],
+                        '<%1 class="%3">%2</%1>'
+                    ), ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']) ?>
+                <?php endif; ?>
+                <div class="flex gap-2">
+                    <button
+                        class="btn btn-secondary p-2 invisible"
+                        aria-label="Previous Slide"
+                        data-prev
+                        disabled
+                    ><?= $lucideIcons->arrowLeftHtml('rtl:-rotate-180', 18, 18, ['aria-hidden' => 'true']); ?></button>
+                    <button
+                        class="btn btn-secondary p-2 invisible"
+                        aria-label="Next Slide"
+                        data-next
+                        disabled
+                    ><?= $lucideIcons->arrowRightHtml('rtl:-rotate-180', 18, 18, ['aria-hidden' => 'true']); ?></button>
+                </div>
+            </div>
+
+            <div class="<?= $escaper->escapeHtmlAttr($sliderClasses) ?>" data-track tabindex="0" aria-live="polite">
+                <template x-for="product in products">
+                    <div class="item product product-item card card-interactive grow flex flex-col w-full">
+                        <?php if (in_array("image", $widgetAttributesToShow)): ?>
+                            <a
+                                :href="productUrl"
+                                class="product photo product-item-photo block max-w-full mx-auto mb-3 no-animation"
+                            >
+                                <img
+                                    :src="productImgUrl"
+                                    :alt="productImgLabel"
+                                    loading="lazy"
+                                    width="<?= $escaper->escapeHtmlAttr($widgetImageWidth) ?>"
+                                    height="<?= $escaper->escapeHtmlAttr($widgetImageHeight) ?>"
+                                    class="product-image-photo object-contain"
+                                    style="aspect-ratio: <?= $escaper->escapeHtmlAttr($widgetImageWidth . '/' . $widgetImageHeight) ?>"
+                                >
+                            </a>
+                        <?php endif; ?>
+                        <div class="product-info flex flex-col grow">
+                            <?php if (in_array("name", $widgetAttributesToShow)): ?>
+                                <p class="mt-2 mb-1 items-center justify-center font-semibold text-lg text-center">
+                                    <a :href="productUrl" class="product-item-link">
+                                        <span x-html="product.name"></span>
+                                    </a>
+                                </p>
+                            <?php endif; ?>
+                            <?php if (in_array("price", $widgetAttributesToShow)): ?>
+                                <div class="price-container pt-1">
+                                    <div class="price-box price-final_price">
+                                        <span class="price-wrapper">
+                                            <span class="price" x-text="productPrice"></span>
+                                        </span>
+                                    </div>
+                                    <?php if ($productPrice->displayPriceInclAndExclTax()): ?>
+                                        <template x-if="product.price_range.minimum_price.base_price">
+                                            <div class="final-price-excl-tax">
+                                                <span>
+                                                    <span><?= $escaper->escapeHtml(__('Excl. Tax')) ?>:</span>
+                                                    <span class="price" x-text="productTaxPrice"></span>
+                                                </span>
+                                            </div>
+                                        </template>
+                                    <?php endif; ?>
+                                </div>
+                            <?php endif; ?>
+                            <div class="mt-auto pt-3 flex flex-wrap items-center gap-y-4 gap-x-2">
+                                <?php if (in_array("learn_more", $widgetAttributesToShow)): ?>
+                                    <a :href="productUrl" class="btn btn-primary text-sm me-auto">
+                                        <?= $escaper->escapeHtml(__('View Product')) ?>
+                                    </a>
+                                <?php endif; ?>
+                                <div class="flex flex-wrap gap-2">
+                                    <?php if ($wishlistViewModel->isEnabled() && in_array("add_to_wishlist", $widgetButtonsToShow)): ?>
+                                        <button
+                                            @click.prevent="addToWishlist"
+                                            aria-label="<?= $escaper->escapeHtmlAttr(__('Add to Wish List')) ?>"
+                                            type="button"
+                                            class="btn p-2 rounded-full"
+                                            data-addto="wishlist"
+                                        >
+                                            <?= $lucideIcons->heartHtml('', 20, 20, ['aria-hidden' => 'true']) ?>
+                                        </button>
+                                    <?php endif; ?>
+
+                                    <?php if ($compareViewModel->showInProductList() && in_array("add_to_compare", $widgetButtonsToShow)): ?>
+                                        <button
+                                            @click.prevent="addToCompare"
+                                            aria-label="<?= $escaper->escapeHtmlAttr(__('Add to Compare')) ?>"
+                                            type="button"
+                                            class="btn p-2 rounded-full"
+                                            data-addto="compare"
+                                        >
+                                            <?= $lucideIcons->scaleHtml('', 20, 20, ['aria-hidden' => 'true']) ?>
+                                        </button>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+
+            <?php if ($showPager): ?>
+                <div class="snap-pager" data-pager></div>
+            <?php endif; ?>
+
+            <span id="<?= $escaper->escapeHtmlAttr($sliderName) ?>-slider-end" tabindex="-1"></span>
+        </section>
+    </template>
+</div>
+

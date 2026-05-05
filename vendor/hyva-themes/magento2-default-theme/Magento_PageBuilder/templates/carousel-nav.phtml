@@ -1,0 +1,37 @@
+<?php
+/**
+ * Hyvä Themes - https://hyva.io
+ * Copyright © Hyvä Themes. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+declare(strict_types=1);
+
+use Hyva\Theme\Model\ViewModelRegistry;
+use Hyva\Theme\ViewModel\LucideIcons;
+use Magento\Framework\View\Element\Template;
+use Magento\Framework\Escaper;
+
+/** @var Template $block */
+/** @var Escaper $escaper */
+/** @var ViewModelRegistry $viewModels */
+
+/** @var LucideIcons $lucideIcons */
+$lucideIcons = $viewModels->require(LucideIcons::class);
+?>
+
+<div data-page-builder-slider-nav class="flex justify-between items-center gap-2">
+    <button
+        class="btn btn-secondary p-2"
+        aria-label="Previous Slide"
+        data-prev
+        disabled
+    ><?= $lucideIcons->arrowLeftHtml('rtl:-rotate-180', 18, 18, ['aria-hidden' => 'true']); ?></button>
+    <div class="snap-pager mx-auto" data-init-pager></div>
+    <button
+        class="btn btn-secondary p-2"
+        aria-label="Next Slide"
+        data-next
+        disabled
+    ><?= $lucideIcons->arrowRightHtml('rtl:-rotate-180', 18, 18, ['aria-hidden' => 'true']); ?></button>
+</div>

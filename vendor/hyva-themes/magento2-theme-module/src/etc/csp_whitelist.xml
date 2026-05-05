@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Hyvä Themes - https://hyva.io
+ * Copyright © Hyvä Themes. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<csp_whitelist xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Csp:etc/csp_whitelist.xsd">
+    <policies>
+        <policy id="img-src">
+            <values>
+                <value id="unsplash" type="host">https://images.unsplash.com</value>
+            </values>
+        </policy>
+        <policy id="script-src">
+            <values>
+                <value id="google_maps" type="host">https://maps.googleapis.com</value>
+                <value id="vimeo_player" type="host">https://player.vimeo.com</value>
+            </values>
+        </policy>
+        <policy id="connect-src">
+            <values>
+                <value id="google_maps" type="host">https://maps.googleapis.com</value>
+                <value id="vimeo_player" type="host">https://player.vimeo.com</value>
+            </values>
+        </policy>
+    </policies>
+</csp_whitelist>

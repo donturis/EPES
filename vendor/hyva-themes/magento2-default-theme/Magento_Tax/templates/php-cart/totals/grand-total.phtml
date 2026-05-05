@@ -1,0 +1,46 @@
+<?php
+/**
+ * Hyvä Themes - https://hyva.io
+ * Copyright © Hyvä Themes. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+use Hyva\Theme\Model\ViewModelRegistry;
+use Hyva\Theme\ViewModel\MagentoMetadata;
+
+/** @var ViewModelRegistry $viewModels */
+$magento = $viewModels->require(MagentoMetadata::class);
+
+/**
+ * The AlpineJS scope of this file is the method `initCartTotals()` in Magento_Checkout::php-cart/totals.phtml
+ */
+?>
+<!-- display subtotal excluding tax -->
+<template x-if="segment.code === 'grand_total' && checkoutConfig.includeTaxInGrandTotal">
+    <div class="divide-y">
+        <div :class="wrapperClassTotals">
+            <div x-text="`${segment.title} ${includingTaxMessage}`" class="font-semibold"></div>
+            <div x-text="hyva.formatPrice(segment.value)" class="justify-self-end"></div>
+        </div>
+        <div :class="wrapperClass" class="text-base">
+            <div x-html="`${segment.title} ${excludingTaxMessage}`"></div>
+            <div
+                class="justify-self-end"
+                <?php /* All Mage-OS releases with a version < 2.4.6 match Magento code >= 2.4.6 */ ?>
+                <?php if ($magento->versionCompare('<', '2.4.6') && $magento->getDistributionName() === 'Magento'): ?>
+                x-text="hyva.formatPrice(totalsData.grand_total)"
+                <?php else: ?>
+                x-text="hyva.formatPrice(totalsData.grand_total - totalsData.tax_amount)"
+                <?php endif; ?>
+            ></div>
+        </div>
+    </div>
+</template>
+
+<!-- display subtotal including tax -->
+<template x-if="segment.code === 'grand_total' && !checkoutConfig.includeTaxInGrandTotal">
+    <div :class="wrapperClassTotals">
+        <div x-text="`${segment.title}`"></div>
+        <div x-text="hyva.formatPrice(segment.value)" class="justify-self-end"></div>
+    </div>
+</template>

@@ -1,0 +1,40 @@
+<?php
+/**
+ * Panamerik override - fix overflow on long attribute values (SKU)
+ * Original: Hyvä Themes
+ */
+
+declare(strict_types=1);
+
+use Magento\Framework\Escaper;
+use Magento\Catalog\Helper\Output as CatalogOutputHelper;
+use Magento\Catalog\Block\Product\View\Attributes;
+use Magento\Catalog\Model\Product;
+
+/** @var Escaper $escaper */
+/** @var CatalogOutputHelper $output */
+/** @var Attributes $block */
+
+/** @var CatalogOutputHelper $catalogOutputHelper */
+$catalogOutputHelper = $this->helper(CatalogOutputHelper::class);
+
+/** @var Product $product */
+$product = $block->getProduct();
+?>
+
+<?php if ($attributes = $block->getAdditionalData()): ?>
+    <div class="table-wrapper max-w-full overflow-x-auto" id="product-attributes">
+        <table class="additional-attributes w-full table-fixed">
+            <?php foreach ($attributes as $attribute): ?>
+                <tr class="border-b border-gray-300 last:border-b-0">
+                    <th class="col label w-1/3 py-2 text-left text-fg-secondary font-normal product-attribute-label"
+                        scope="row"><?= $escaper->escapeHtml($attribute['label']) ?></th>
+                    <td class="col data w-2/3 py-2 pl-2 text-left product-attribute-value break-all"
+                        data-th="<?= $escaper->escapeHtmlAttr($attribute['label']) ?>"
+                    ><?= /* @noEscape */
+                     $catalogOutputHelper->productAttribute($product, $attribute['value'], $attribute['code']) ?></td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+    </div>
+<?php endif;?>

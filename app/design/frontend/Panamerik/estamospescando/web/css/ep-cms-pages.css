@@ -1,0 +1,293 @@
+/* ===========================================
+   Estamos Pescando - CMS Pages Design System
+   =========================================== */
+
+/* Hero Section */
+.ep-hero {
+    background: linear-gradient(135deg, #1a365d 0%, #1f48c5 100%);
+    color: #fff;
+    border-radius: 16px;
+    padding: 48px 40px;
+    margin-bottom: 32px;
+    position: relative;
+    overflow: hidden;
+}
+.ep-hero::after {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 200px; height: 200px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 50%;
+}
+.ep-hero h1, .ep-hero .ep-hero-title {
+    font-size: 2rem;
+    font-weight: 800;
+    margin: 0 0 12px;
+    line-height: 1.2;
+}
+.ep-hero p, .ep-hero .ep-hero-sub {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    margin: 0;
+    max-width: 600px;
+}
+
+/* Cards */
+.ep-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
+    padding: 24px;
+    transition: box-shadow 0.2s, transform 0.2s;
+    border: 1px solid #edf2f7;
+}
+.ep-card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
+}
+.ep-card-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #1f48c5 0%, #0077cb 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 12px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.ep-card {
+    text-align: center;
+}
+.ep-card-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1a365d;
+    margin: 0 0 8px;
+}
+.ep-card-text {
+    font-size: 0.95rem;
+    color: #4a5568;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Grid Layouts */
+.ep-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+}
+.ep-grid-3 {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+@media (min-width: 768px) {
+    .ep-grid-2 { grid-template-columns: 1fr 1fr; }
+    .ep-grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+}
+
+/* Accordion/Collapsible */
+.ep-accordion {
+    margin-bottom: 24px;
+}
+.ep-accordion-item {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+}
+.ep-accordion-item:hover {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.ep-accordion-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1a365d;
+    text-align: left;
+    gap: 12px;
+}
+.ep-accordion-btn:hover { background: #f7fafc; }
+.ep-accordion-icon {
+    width: 24px; height: 24px;
+    flex-shrink: 0;
+    color: #1f48c5;
+    transition: transform 0.3s ease;
+}
+.ep-accordion-icon.open { transform: rotate(180deg); }
+.ep-accordion-body {
+    padding: 0 20px 20px;
+    font-size: 0.95rem;
+    color: #4a5568;
+    line-height: 1.7;
+}
+
+/* Highlight Boxes */
+.ep-highlight {
+    background: linear-gradient(135deg, #ebf5ff 0%, #f0f4ff 100%);
+    border-left: 4px solid #1f48c5;
+    border-radius: 0 10px 10px 0;
+    padding: 20px 24px;
+    margin: 24px 0;
+}
+.ep-highlight-title {
+    font-weight: 700;
+    color: #1a365d;
+    margin: 0 0 6px;
+    font-size: 1rem;
+}
+.ep-highlight-text {
+    color: #4a5568;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Steps */
+.ep-steps {
+    counter-reset: step;
+    padding: 0;
+    list-style: none;
+}
+.ep-step {
+    display: flex;
+    gap: 16px;
+    padding: 16px 0;
+    border-bottom: 1px solid #edf2f7;
+    align-items: flex-start;
+}
+.ep-step:last-child { border-bottom: none; }
+.ep-step::before {
+    counter-increment: step;
+    content: counter(step);
+    flex-shrink: 0;
+    width: 36px; height: 36px;
+    background: #1f48c5;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+.ep-step-content {
+    flex: 1;
+}
+.ep-step-title {
+    font-weight: 600;
+    color: #1a365d;
+    margin: 0 0 4px;
+}
+.ep-step-text {
+    color: #4a5568;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* Feature List */
+.ep-feature-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.ep-feature-item {
+    display: flex;
+    gap: 12px;
+    padding: 12px 0;
+    align-items: flex-start;
+}
+.ep-feature-check {
+    flex-shrink: 0;
+    width: 24px; height: 24px;
+    background: #c6f6d5;
+    color: #22543d;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.ep-feature-check svg { width: 14px; height: 14px; }
+
+/* Contact Cards */
+.ep-contact-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 0.2s;
+}
+.ep-contact-card:hover {
+    border-color: #1f48c5;
+    box-shadow: 0 4px 12px rgba(31,72,197,0.1);
+}
+.ep-contact-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #1f48c5 0%, #0077cb 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+    flex-shrink: 0;
+}
+
+/* Section spacing */
+.ep-section {
+    margin-bottom: 40px;
+}
+.ep-section-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #1a365d;
+    margin: 0 0 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #1f48c5;
+    display: inline-block;
+}
+
+/* Badge */
+.ep-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+.ep-badge-blue {
+    background: #dbeafe;
+    color: #1e40af;
+}
+.ep-badge-green {
+    background: #dcfce7;
+    color: #166534;
+}
+
+
+
