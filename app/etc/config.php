@@ -378,6 +378,7 @@ return [
         'Mollie_Payment' => 0,
         'Mollie_HyvaCompatibility' => 0,
         'Panamerik_CheckoutCustom' => 1,
+        'Panamerik_MailTransport' => 1,
         'PayPal_Braintree' => 1,
         'PayPal_BraintreeCustomerBalance' => 1,
         'PayPal_BraintreeGiftCard' => 1,
