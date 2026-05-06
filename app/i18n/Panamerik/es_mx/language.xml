@@ -4,5 +4,6 @@
     <vendor>panamerik</vendor>
     <package>es_mx</package>
     <sort_order>100</sort_order>
-    <use vendor="magento" package="es_es"/>
+    <use vendor="mageplaza" package="es_es"/>
 </language>
+
